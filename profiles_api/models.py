@@ -28,7 +28,7 @@ class UserProfileManager(BaseUserManager):
 
     def save_user(self, user):
         """save the given user in the database."""
-        user.save_user(using=self._db)
+        user.save(using=self._db)
 
 
 class UserProfile(AbstractBaseUser, PermissionsMixin):
@@ -38,13 +38,12 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    id_code = models.CharField(unique=True, max_length=32, default=generate_id_code)
+    # id_code = models.CharField(unique=True, max_length=32, default=generate_id_code)
 
     objects = UserProfileManager()
 
-    USERNAME_FIELD = 'id_code'
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
-    EMAIL_FIELD = ['email']
 
     def get_full_name(self) -> str:
         """Retrieve full name of the user"""
@@ -54,10 +53,10 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         """Retrieve short name of thr user"""
         return f"{self.first_name}"
 
-    def get_email_field_name(self) -> str:
-        """Retrieve email of the user"""
-        return f"{self.email}"
+    # def get_email_field_name(self) -> str:
+    #     """Retrieve email of the user"""
+    #     return f"{self.email}"
 
     def __str__(self) -> str:
         """Return string representation of the user"""
-        return f"{self.id_code}"
+        return f"{self.email}"

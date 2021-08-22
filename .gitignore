@@ -317,3 +317,5 @@ modules.xml
 *.box
 
 # End of https://www.toptal.com/developers/gitignore/api/python,pycharm+all,django,vagrant
+
+test.py
